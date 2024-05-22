@@ -77,3 +77,39 @@ Retorna la información de todos los productos ubicados en la **cateogría** esp
 ➤ Id: 11
 . . .
 ```
+
+# Desarrollo
+
+El consumo de los servicios se realizó usando la librería [http](https://pub.dev/packages/http) y se encuentra ubicado en el archivo `product_remote_data_source.dart`. \
+En este se hace uso de una función genérica que realiza la solicitud HTTP y maneja la conversión de JSON.\
+Para el manejo de errores se utiliza **Either** de la librería [dartz](https://pub.dev/packages/dartz). Se envía en la parte *izquierda* la respuesta del servicio, y en la parte *derecha* se envía el error.
+```
+Future<Either<T, String>> _fetchData<T>(Uri url, T Function(dynamic) fromJson) async {
+  try {
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return Left(fromJson(json.decode(response.body)));
+    } else {
+      return Right(response.body);
+    }
+  } catch (error) {
+    return Right(error.toString());
+  }
+}
+```
+
+Para consultar el servicio se crea una instancia de la clase **Catalog**.
+```
+final catalog = fake_store.Catalog();
+```
+Con esta instancia podemos llamar a los diferentes casos de uso.
+```
+final product = await catalog.getProduct(7);
+```
+Y procesar la respuesta haciendo uso de *fold*, recibiendo primero el objeto de respuesta del servicio y de segundo el error.
+```
+product.fold(
+  (product) => printProduct(product),
+  (error) => print(error),
+);
+  ```
