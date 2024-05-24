@@ -1,9 +1,9 @@
-import 'package:fake_store/domain/entities/rating.dart';
+import 'package:fake_store/domain/entities/rating_entity.dart';
 
-class RatingModel extends Rating {
+class RatingModel extends RatingEntity {
   RatingModel({
-    required super.rate,
-    required super.count,
+    super.rate,
+    super.count,
   });
 
   factory RatingModel.fromJson(Map<String, dynamic> json) => RatingModel(

@@ -3,10 +3,28 @@
 
 Un proyecto simple que consume los servicios del [Fake Store API](https://fakestoreapi.com/).
 
+## Consumo de servicios
+Para consultar los servicios se crea una instancia de la clase **Catalog**.
+```
+final catalog = fake_store.Catalog();
+```
+Con esta instancia podemos llamar a los diferentes casos de uso.
+```
+final product = await catalog.getProduct(7);
+```
+Y procesar la respuesta haciendo uso de *fold*, recibiendo primero el objeto de respuesta del servicio y de segundo el error.
+```
+product.fold(
+  (product) => printProduct(product),
+  (error) => print(error),
+);
+  ```
+
 Actualmente el proyecto consume los siguientes 3 servicios del API:
 
 #### GetProduct: 
-Retorna la información de un producto individual consultándolo por medio del **id** del producto.
+Retorna la información de un producto individual consultándolo por medio del **id** del producto.\
+Se puede acceder a este servicio por medio de `catalog.getProduct(id)` y el servicio responderá con la información del producto solicitado.
 
 ```
 ╔══════════════════════════════╗
@@ -23,7 +41,8 @@ Retorna la información de un producto individual consultándolo por medio del *
 ```
 
 #### GetProductsList: 
-Retorna la información de todos los productos disponibles en el API.
+Retorna la información de todos los productos disponibles en el API.\
+Se puede acceder a este servicio por medio de `catalog.getProductsList()` y se obtendrá la siguiente respuesta:
 ```
 ╔══════════════════════════════╗
 ║ Todos los productos:         ║
@@ -51,7 +70,8 @@ Retorna la información de todos los productos disponibles en el API.
 ```
 
 #### GetProductsInCategory: 
-Retorna la información de todos los productos ubicados en la **cateogría** especificada.
+Retorna la información de todos los productos ubicados en la **cateogría** especificada.\
+Se puede acceder a este servicio por medio de `catalog.getProductsInCategory(Category)`, en el cual **Category** es un Enum de categorías, y responderá con un listado de productos de la categoría seleccionada.
 ```
 ╔══════════════════════════════╗
 ║ Productos tipo electronicos: ║
@@ -78,7 +98,7 @@ Retorna la información de todos los productos ubicados en la **cateogría** esp
 . . .
 ```
 
-# Desarrollo
+## Desarrollo
 
 El consumo de los servicios se realizó usando la librería [http](https://pub.dev/packages/http) y se encuentra ubicado en el archivo `product_remote_data_source.dart`. \
 En este se hace uso de una función genérica que realiza la solicitud HTTP y maneja la conversión de JSON.\
@@ -97,19 +117,3 @@ Future<Either<T, String>> _fetchData<T>(Uri url, T Function(dynamic) fromJson) a
   }
 }
 ```
-
-Para consultar el servicio se crea una instancia de la clase **Catalog**.
-```
-final catalog = fake_store.Catalog();
-```
-Con esta instancia podemos llamar a los diferentes casos de uso.
-```
-final product = await catalog.getProduct(7);
-```
-Y procesar la respuesta haciendo uso de *fold*, recibiendo primero el objeto de respuesta del servicio y de segundo el error.
-```
-product.fold(
-  (product) => printProduct(product),
-  (error) => print(error),
-);
-  ```

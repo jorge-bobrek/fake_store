@@ -1,6 +1,6 @@
-import 'package:fake_store/domain/entities/product.dart';
-import 'package:fake_store/fake_store.dart' as fake_store;
-import 'package:fake_store/data/models/category.dart';
+import 'package:fake_store/domain/entities/product_entity.dart';
+import 'package:fake_store/catalog.dart' as fake_store;
+import 'package:fake_store/domain/utils/category_enum.dart';
 
 void main(List<String> arguments) async {
   final catalog = fake_store.Catalog();
@@ -33,18 +33,20 @@ void main(List<String> arguments) async {
   );
 }
 
-printProduct(Product product) {
+printProduct(ProductEntity product) {
   print("➤ Id: ${product.id}");
   print("➤ Título: ${product.title}");
   print("➤ Precio: ${product.price}");
   print("➤ Descripción: ${product.description}");
   print("➤ Categoría: ${product.category}");
   print("➤ Imagen: ${product.image}");
-  print("➤ Puntuación: ${product.rating.rate}");
-  print("➤ Calificaciones: ${product.rating.count}");
+  if (product.rating != null) {
+    print("➤ Puntuación: ${product.rating!.rate}");
+    print("➤ Calificaciones: ${product.rating!.count}");
+  }
 }
 
-printProductList(List<Product> products) {
+printProductList(List<ProductEntity> products) {
   for (var product in products) {
     printProduct(product);
     print("=========================================");

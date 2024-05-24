@@ -1,17 +1,17 @@
-import 'package:fake_store/domain/entities/product.dart';
+import 'package:fake_store/domain/entities/product_entity.dart';
 
-import 'category.dart';
+import '../../domain/utils/category_enum.dart';
 import 'rating_model.dart';
 
-class ProductModel extends Product {
+class ProductModel extends ProductEntity {
   ProductModel({
-    required super.id,
-    required super.title,
-    required super.price,
-    required super.description,
-    required super.category,
-    required super.image,
-    required super.rating,
+    super.id,
+    super.title,
+    super.price,
+    super.description,
+    super.category,
+    super.image,
+    super.rating,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -19,7 +19,7 @@ class ProductModel extends Product {
         title: json["title"],
         price: json["price"]?.toDouble(),
         description: json["description"],
-        category: categoryValues.map[json["category"]]!,
+        category: categoryValues.map[json["category"]],
         image: json["image"],
         rating: RatingModel.fromJson(json["rating"]),
       );
@@ -31,6 +31,6 @@ class ProductModel extends Product {
         "description": description,
         "category": categoryValues.reverse[category],
         "image": image,
-        "rating": rating.toJson(),
+        "rating": rating?.toJson(),
       };
 }
