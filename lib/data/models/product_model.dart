@@ -14,23 +14,35 @@ class ProductModel extends ProductEntity {
     super.rating,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        title: json["title"],
-        price: json["price"]?.toDouble(),
-        description: json["description"],
-        category: categoryValues.map[json["category"]],
-        image: json["image"],
-        rating: RatingModel.fromJson(json["rating"]),
-      );
+  factory ProductModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return ProductModel();
+    }
+    return ProductModel(
+      id: json["id"] ?? 0,
+      title: json["title"] ?? '',
+      price: json["price"].toDouble() ?? 0.0,
+      description: json["description"] ?? '',
+      category: categoryValues.map[json["category"]] ?? Category.other,
+      image: json["image"] ?? '',
+      rating: json["rating"] != null
+          ? RatingModel.fromJson(json["rating"])
+          : RatingModel(),
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "price": price,
-        "description": description,
-        "category": categoryValues.reverse[category],
-        "image": image,
-        "rating": rating?.toJson(),
-      };
+  Map<String, dynamic>? toJson() {
+    if (id == null && title == null && price == null && description == null && category == null && image == null && rating == null) {
+      return null;
+    }
+    return {
+      "id": id,
+      "title": title,
+      "price": price,
+      "description": description,
+      "category": categoryValues.reverse[category],
+      "image": image,
+      "rating": rating?.toJson(),
+    };
+  }
 }

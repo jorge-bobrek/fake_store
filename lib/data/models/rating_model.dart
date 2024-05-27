@@ -6,13 +6,23 @@ class RatingModel extends RatingEntity {
     super.count,
   });
 
-  factory RatingModel.fromJson(Map<String, dynamic> json) => RatingModel(
-        rate: json["rate"]?.toDouble(),
-        count: json["count"],
-      );
+  factory RatingModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return RatingModel();
+    }
+    return RatingModel(
+      rate: json["rate"].toDouble() ?? 0.0,
+      count: json["count"] ?? 0,
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "rate": rate,
-        "count": count,
-      };
+  Map<String, dynamic>? toJson() {
+    if (rate == null && count == null) {
+      return null;
+    }
+    return {
+      'rate': rate,
+      'count': count,
+    };
+  }
 }

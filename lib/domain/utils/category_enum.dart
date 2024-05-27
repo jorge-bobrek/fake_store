@@ -1,6 +1,6 @@
 import 'enum_values.dart';
 
-enum Category { electronics, jewelery, mensClothing, womensClothing }
+enum Category { electronics, jewelery, mensClothing, womensClothing, other }
 
 final categoryValues = EnumValues({
   "electronics": Category.electronics,
