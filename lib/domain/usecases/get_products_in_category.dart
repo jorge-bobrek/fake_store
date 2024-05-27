@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:fake_store/domain/utils/category_enum.dart';
 import 'package:fake_store/domain/entities/product_entity.dart';
-import 'package:fake_store/domain/repositories/product_repository.dart';
+import 'package:fake_store/domain/repositories/interfaces/product_repository.dart';
 
 class GetProductsInCategory {
-  final ProductRepository repository;
+  final IProductRepository repository;
 
   GetProductsInCategory(this.repository);
 

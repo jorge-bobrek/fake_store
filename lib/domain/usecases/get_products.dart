@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:fake_store/domain/entities/product_entity.dart';
-import 'package:fake_store/domain/repositories/product_repository.dart';
+import 'package:fake_store/domain/repositories/interfaces/product_repository.dart';
 
 class GetProducts {
-  final ProductRepository repository;
+  final IProductRepository repository;
 
   GetProducts(this.repository);
 
